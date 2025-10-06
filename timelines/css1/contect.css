@@ -1,0 +1,659 @@
+   :root {
+            --primary: #0d6efd;
+            --secondary: #6c757d;
+            --dark: #121212;
+            --light: #f8f9fa;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --card-bg: #ffffff;
+            --body-bg: #f5f5f7;
+            --footer-bg: #2c3e50;
+        }
+
+        .dark-mode {
+            --primary: #0dcaf0;
+            --secondary: #adb5bd;
+            --dark: #ef0707;
+            --light: #292721;
+            --text-dark: #f8f9fa;
+            --text-light: #f8f9fa;
+            --card-bg: #1e1e1e;
+            --body-bg: #121212;
+            --footer-bg: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-dark);
+            transition: all 0.5s ease;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+        }
+
+         .btn-outline-primary{
+            --bs-btn-border-color:var(--primary);
+            --bs-btn-hover-bg:var(--primary);
+            --bs-btn-hover-border-color:var(--primary) ;
+            color:var(--primary);
+        }
+        .logo_img{
+            height:100px;
+            width:250px;
+            
+        }
+       .nav-icons a {
+    text-decoration: none !important; /* remove underline */
+}
+        /* Logo Animation */
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #0d6efd, #6f42c1, #d63384);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradient 8s ease infinite;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #0d6efd, #6f42c1, #d63384);
+            background-size: 300% 300%;
+            animation: gradient 8s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            margin-top: 5px;
+            border-radius: 30px;
+            padding-left: 40px;
+            background-color: var(--body-bg);
+            color: var(--text-dark);
+            border: 1px solid var(--secondary);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 16px;
+            color: var(--secondary);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            margin: 0 10px;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-icons .btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+      
+        /* Footer */
+        footer {
+            background: var(--footer-bg);
+            color: var(--text-light);
+            padding: 70px 0 0;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .footer-links h5 {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .brands img {
+            height: 30px;
+            margin: 0 10px 10px 0;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .brands img:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            background: rgba(0,0,0,0.2);
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg) scale(1.1);
+        }
+
+        /* 3D Animations */
+        .animate-3d {
+            transform: perspective(1000px) rotateY(0deg);
+            transition: transform 0.5s ease;
+        }
+
+        .animate-3d:hover {
+            transform: perspective(1000px) rotateY(10deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+           
+        }
+
+        @media (max-width: 768px) {
+          
+            
+            .navbar-nav {
+                margin-top: 15px;
+            }
+            
+            .nav-icons {
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+         
+            
+            .logo {
+                font-size: 1.8rem;
+            }
+        }
+
+
+
+
+
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(13, 110, 253, 0.1), rgba(108, 117, 125, 0.05)), url('../img/contact_hero.jpg') center/cover;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+            color: white;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            
+        }
+
+        .contact-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            height: 100%;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(13, 110, 253, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .contact-info {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        /* Form */
+     
+        .contact-form {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            animation: fadeInRight 1s ease;
+           
+            height: 500px;
+            width:1000px;
+        }
+
+        .form-title { 
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .form-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        #abc1 {
+            background-color: rgba(245, 245, 247, 0.3);
+            border: 2px solid rgba(13, 110, 253, 0.1);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+         #abc1:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+          
+        /* 
+           .send_message{
+             display: flex;
+             justify-content: center; 
+             align-items: center;    
+   
+        }
+        .contact_message{
+            height: 150px;
+            
+        }
+        .single_text{
+            height:50px
+        }
+
+        .send_button{
+            width:950px ;
+            height: 50px;
+        } */
+         
+         /* ✅ Container styling */
+
+.send_message {
+    max-width: 1000px;   /* center form on big screens */
+    margin: 0 auto;     /* horizontal centering */
+}
+
+/* ✅ Input and textarea */
+.single_text {
+    min-height: 50px;   /* flexible height */
+}
+
+.contact_message {
+    min-height: 150px;
+    resize: vertical;   /* user can resize if needed */
+}
+
+/* ✅ Button styling */
+.send_button {
+    width: 100%;        /* always full width of parent */
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* 📱 Tablet adjustments */
+@media (max-width: 768px) {
+   
+
+    .single_text {
+        min-height: 45px;
+    }
+    .contact_message {
+        min-height: 120px;
+    }
+    .send_button {
+        height: 45px;
+        font-size: 15px;
+    }
+}
+
+/* 📱 Mobile phones */
+@media (max-width: 480px) {
+     .send_message {
+    max-width: 398px;   /* center form on big screens */
+    margin: 0 auto;     /* horizontal centering */
+    }
+    .single_text {
+        min-height: 40px;
+    }
+    .contact_message {
+        min-height: 100px;
+    }
+    .send_button {
+        height: 40px;
+        font-size: 14px;
+    }
+}
+
+
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background: #0b5ed7;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        /* Map */
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            height: 400px;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .contact-card {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                height: 300px;
+            }
+            
+            .hero-title {
+                font-size: 2.3rem;
+            }
+            
+            .contact-section {
+                padding: 50px 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                height: 250px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .contact-form, .contact-card {
+                padding: 25px;
+            }
+            
+        }
+
+
+
+
+
+        /* Add in your contect.css */
+#form-message {
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 30px;
+    font-size: 18px;
+    border-radius: 10px;
+    color: #fff;
+    z-index: 9999;
+    text-align: center;
+}
+
+.success-msg {
+    background-color: #28a745; /* green */
+}
+
+.error-msg {
+    background-color: #dc3545; /* red */
+}
