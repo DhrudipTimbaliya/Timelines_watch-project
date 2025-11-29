@@ -54,7 +54,7 @@
                $index = 0;
                while ($row = mysqli_fetch_assoc($result)) { ?>
                    <div class="carousel-item <?= ($index == 0) ? 'active' : ''; ?>">
-                       <img src="<?= $row['img']; ?>" class="d-block w-100" alt="<?= $row['title']; ?>">
+                       <img src="<?= $row['img']; ?>"  class="d-block w-100" alt="<?= $row['title']; ?>">
                        <div class="carousel-caption d-none d-md-block animate-3d">
                            <h2><?= $row['title']; ?></h2>
                            <p><?= $row['dec']; ?></p>

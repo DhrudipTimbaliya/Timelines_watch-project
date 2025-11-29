@@ -75,4 +75,4 @@ if (mysqli_num_rows($result) > 0) {
     </table>
   </div>
 
-<?php include_once("include/footer.php"); ?>
+<?php include_once("include/footer.php"); ?>7

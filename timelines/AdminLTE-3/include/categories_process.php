@@ -26,6 +26,10 @@ if (isset($_FILES['img-path']) && isset($_POST['category-name'])) {
     } else {
         $sql = "INSERT INTO categories (img, categories_name) VALUES ('$img', '$category_name')";
         if (mysqli_query($con, $sql)) {
+              // Create directory if it doesn't exist
+             if (!is_dir( "../../img/" .$category_name)) {
+                 mkdir( "../../img/" .$category_name, 0777, true); // recursive create
+             }
             header("Location: ../categories.php?msg=Category Added");
             exit();
         } else {

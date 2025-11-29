@@ -283,7 +283,26 @@
                 font-size: 1.8rem;
             }
         }
+      /* Default (disabled) state */
+#checkoutForm input[disabled],
+#checkoutForm select[disabled],
+#checkoutForm textarea[disabled] {
+  background-color: #f8f9fa;   /* light gray */
+  border: 1px solid #ccc;
+  color: #555;
+  cursor: not-allowed;
+}
 
+/* Editing (enabled) state */
+#checkoutForm input:not([disabled]),
+#checkoutForm select:not([disabled]),
+#checkoutForm textarea:not([disabled]) {
+  background-color: #0c0c0c;  /* white background */
+  border: 3px solid #0dd5fd;  /* bootstrap blue border */
+  color: #faf9f9;
+  box-shadow: 0 0 5px rgba(13, 110, 253, 0.3);
+  transition: all 0.2s ease-in-out;
+}
 
 
 

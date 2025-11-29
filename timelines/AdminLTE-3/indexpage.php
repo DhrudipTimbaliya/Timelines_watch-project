@@ -88,7 +88,6 @@ $data = mysqli_query($con, "SELECT * FROM crousel");
     <a href="edit_crousel.php?id=<?= $row['id'] ?>">
   <button id="btnEdit"><i class="fas fa-pen-to-square"></i> Edit</button>
 </a>
-
     </td>
     <td class="allbutton">
       <form method="POST" action="include/crousel_process.php" style="display:inline;">
@@ -114,8 +113,6 @@ $data = mysqli_query($con, "SELECT * FROM crousel");
     <?php endif; ?>
   </form>
 </td>
-
-
   </tr>
   <?php endwhile; ?>
 </table>

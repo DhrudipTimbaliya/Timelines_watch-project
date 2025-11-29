@@ -65,53 +65,53 @@ include_once("include/header.php");
                 <!-- /.float-right -->
               </div>
               <form method="post" action="">
-  <div class="table-responsive mailbox-messages">
-    <table class="table table-hover table-striped">
-      <tbody>
-        <?php
-        include_once("../php/connection.php");
-        $query  = "SELECT * FROM feed ORDER BY id DESC";
-        $result = mysqli_query($con, $query);
+                 <div class="table-responsive mailbox-messages">
+                   <table class="table table-hover table-striped">
+                     <tbody>
+                       <?php
+                       include_once("../php/connection.php");
+                       $query  = "SELECT * FROM feed ORDER BY id DESC";
+                       $result = mysqli_query($con, $query);               
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-        ?>
-        <tr>
-            <td>
-                <div class="icheck-primary"> 
-                    <input type="checkbox" name="delete_ids[]" value="<?php echo $row['id']; ?>" id="check<?php echo $row['id']; ?>">
-                    <label for="check<?php echo $row['id']; ?>"></label>
-                </div> 
-            </td> 
-            <td class="mailbox-star">
-                <a href="#"><?php echo htmlspecialchars($row['nm']); ?></a>
-            </td> 
-            <td class="mailbox-name">
-                <i><?php echo htmlspecialchars($row['email']); ?></i>
-            </td> 
-            <td class="mailbox-attachment"><b><?php echo htmlspecialchars($row['subject']); ?></b></td> 
-            <td class="mailbox-subject"><?php echo htmlspecialchars($row['message']); ?></td> 
-            <td class="mailbox-date"><?php echo $row['time']; ?></td> 
-        </tr>
-        <?php
-            }
-        } else {
-            echo "<tr><td colspan='6'>No messages found</td></tr>";
-        }
-        ?>
-      </tbody>
-    </table>
-  </div>
-  
-  <!-- delete button (top) -->
-  <div class="mailbox-controls">
-    <div class="btn-group">
-      <button type="submit" name="delete" class="btn btn-danger btn-sm">
-        <i class="far fa-trash-alt"></i> Delete
-      </button>
-    </div>
-  </div>
-</form>
+                       if (mysqli_num_rows($result) > 0) {
+                           while ($row = mysqli_fetch_assoc($result)) {
+                       ?>
+                       <tr>
+                           <td>
+                               <div class="icheck-primary"> 
+                                   <input type="checkbox" name="delete_ids[]" value="<?php echo $row['id']; ?>" id="check<?php echo $row['id']; ?>">
+                                   <label for="check<?php echo $row['id']; ?>"></label>
+                               </div> 
+                           </td> 
+                           <td class="mailbox-star">
+                               <a href="#"><?php echo htmlspecialchars($row['nm']); ?></a>
+                           </td> 
+                           <td class="mailbox-name">
+                               <i><?php echo htmlspecialchars($row['email']); ?></i>
+                           </td> 
+                           <td class="mailbox-attachment"><b><?php echo htmlspecialchars($row['subject']); ?></b></td> 
+                           <td class="mailbox-subject"><?php echo htmlspecialchars($row['message']); ?></td> 
+                           <td class="mailbox-date"><?php echo $row['time']; ?></td> 
+                       </tr>
+                       <?php
+                           }
+                       } else {
+                           echo "<tr><td colspan='6'>No messages found</td></tr>";
+                       }
+                       ?>
+                     </tbody>
+                   </table>
+                 </div>
+                 
+                 <!-- delete button (top) -->
+                 <div class="mailbox-controls">
+                   <div class="btn-group">
+                     <button type="submit" name="delete" class="btn btn-danger btn-sm">
+                       <i class="far fa-trash-alt"></i> Delete
+                     </button>
+                   </div>
+                 </div>
+               </form>
 
               <!-- /.mail-box-messages -->
             </div>

@@ -17,19 +17,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
             exit;
         }
     }
-
-    if ($action == 'change_role') {
-        // Change role to Admin
-        $query = "UPDATE user SET role = 'admin' WHERE user_id = $id";
-        if (mysqli_query($con, $query)) {
-            header("Location: ../customer_table.php?msg=role_changed");
-            exit;
-        } else {
-            header("Location: ../customer_table.php?msg=error");
-            exit;
-        }
-    }
-
+    
     if ($action == 'delete_user') {
         // Delete user
         $query = "DELETE FROM user WHERE user_id = $id";

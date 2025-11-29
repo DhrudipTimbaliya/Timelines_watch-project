@@ -38,7 +38,6 @@ $result = mysqli_query($con, $sql);
       <th>Email</th>
       <th>Password</th>
       <th>Phone</th>
-      <th>Role</th>
       <th>Status</th>
       <th>Edit</th>
       <th>Delete</th>
@@ -58,13 +57,7 @@ $result = mysqli_query($con, $sql);
       <td><?php echo htmlspecialchars($row['phone']); ?></td>
 
       <!-- Role Button (Admin → Customer) -->
-      <td class="allbutton">
-        <a href="include/admin_process.php?action=change_role&id=<?php echo $row['user_id']; ?>">
-          <button id="btnAdmin">
-            <i class="fa-solid fa-user"></i> Customer
-          </button>
-        </a>
-      </td>
+      
 
       <!-- Status Button -->
       <td class="allbutton">

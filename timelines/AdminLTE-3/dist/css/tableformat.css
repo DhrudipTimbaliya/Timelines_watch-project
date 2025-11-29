@@ -31,7 +31,7 @@
 
 /* Base reset */
 *{box-sizing:border-box}
-html,body{height:100%}
+html,body{height:100%;width:100%;}
 body{background:var(--bg);color:var(--txt);font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;margin:0;padding:18px}
 a{color:var(--primary-1);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -2341,4 +2341,11 @@ tbody tr{animation:fadeIn .35s ease both}
     background-color: #333; /* background */
     color: #fff;            /* text color */
     padding: 8px;
+}
+
+#oder_bg {
+  
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
 }

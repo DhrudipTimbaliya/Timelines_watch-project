@@ -2,20 +2,6 @@
 session_start();
 include('php/connection.php'); // expects $con (mysqli)
 
-/* --------------------------------------------------------------------------
- | FashionHub Auth Page (Login / Signup / Forgot Password – 3 Steps)
- | --------------------------------------------------------------------------
- | This version fixes the forgot-password step logic by:
- |  - Persisting the current step in $_SESSION['forgot_step']
- |  - NEVER resetting the step to 1 unless it is a fresh start
- |  - Correctly assigning the step (using =, not ==)
- |  - Keeping the UI on the correct step after POST/refresh
- |
- | NOTE: For compatibility with your current database, this example
- | validates passwords as PLAINTEXT (as in your original code).
- | In production, you should store hashed passwords and use password_hash
- | / password_verify. See the SECURITY NOTES near the end of this file.
- |-------------------------------------------------------------------------- */
 
 // ------------------------------
 // Helpers
@@ -73,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email    = trim($_POST['email'] ?? '');
         $password = trim($_POST['password'] ?? '');
 
-        // Basic sanitization (keeping it close to your original flow)
+        
         $se = mysqli_real_escape_string($con, $email);
         $query = "SELECT * FROM user WHERE email = '$se' AND status = 'active' LIMIT 1";
 
@@ -81,9 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($result && mysqli_num_rows($result) === 1) {
             $user = mysqli_fetch_assoc($result);
-            // PLAINTEXT check for compatibility with your DB (see SECURITY NOTES)
+            
             if($user['status']==='active'){
-            if ($password === $user['password']) {
+           if (md5($password) === $user['password']) {
+
                 $_SESSION['is_logged_in'] = true;
                 $_SESSION['user_id']      = $user['user_id'];
                 $_SESSION['email']        = $user['email'];
@@ -112,63 +99,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // SIGNUP PROCESS --------------------------------------------------------
+   
     if (isset($_POST['signup-btn'])) {
-        $fname   = trim($_POST['fname']   ?? '');
-        $lname   = trim($_POST['lname']   ?? '');
-        $email   = trim($_POST['email']   ?? '');
-        $phone   = trim($_POST['phone']   ?? '');
-        $address = trim($_POST['address'] ?? '');
-        $pin     = trim($_POST['pin'] ?? '');
-        $city    = trim($_POST['city'] ?? '');
-        $state   = trim($_POST['state'] ?? '');
-        $password = trim($_POST['password'] ?? '');
-        $confirm  = trim($_POST['confirm_password'] ?? '');
+    $fname   = trim($_POST['fname']   ?? '');
+    $lname   = trim($_POST['lname']   ?? '');
+    $email   = trim($_POST['email']   ?? '');
+    $phone   = trim($_POST['phone']   ?? '');
+    $address = trim($_POST['address'] ?? '');
+    $pin     = trim($_POST['pin'] ?? '');
+    $city    = trim($_POST['city'] ?? '');
+    $state   = trim($_POST['state'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+    $confirm  = trim($_POST['confirm_password'] ?? '');
 
-        // Persist entered fields across potential error reload
-        $_SESSION['tmp_fname']   = $fname;
-        $_SESSION['tmp_lname']   = $lname;
-        $_SESSION['tmp_email']   = $email;
-        $_SESSION['tmp_phone']   = $phone;
-        $_SESSION['tmp_address'] = $address;
+    // Persist entered fields across potential error reload
+    $_SESSION['tmp_fname']   = $fname;
+    $_SESSION['tmp_lname']   = $lname;
+    $_SESSION['tmp_email']   = $email;
+    $_SESSION['tmp_phone']   = $phone;
+    $_SESSION['tmp_address'] = $address;
 
-        if ($password !== $confirm) {
-            $_SESSION['flash_signup_error'] = 'Passwords do not match';
-            $_SESSION['active_form'] = 'signup';
-            header('Location: '.$_SERVER['PHP_SELF']);
-            exit;
-        }
-
-        $se = mysqli_real_escape_string($con, $email);
-        $check = mysqli_query($con, "SELECT user_id FROM user WHERE email = '$se' LIMIT 1");
-        if ($check && mysqli_num_rows($check) > 0) {
-            $_SESSION['flash_signup_error'] = 'Email already registered';
-            $_SESSION['active_form'] = 'signup';
-            header('Location: '.$_SERVER['PHP_SELF']);
-            exit;
-        }
-
-        $full_name = trim($fname.' '.$lname);
-        $sn = mysqli_real_escape_string($con, $full_name);
-        $sp = mysqli_real_escape_string($con, $phone);
-        $sa = mysqli_real_escape_string($con, $address);
-        $spw = mysqli_real_escape_string($con, $confirm); // plaintext for compatibility
-
-        $insert = "INSERT INTO user (name, email, password, role, phone, address ,pin ,city ,stat, created_at)
-                   VALUES ('$sn', '$se', '$spw', 'user', '$sp', '$sa','$pin','$city','$state', NOW())";
-        if (mysqli_query($con, $insert)) {
-            // Clear temp values now that signup succeeded
-            unset($_SESSION['tmp_fname'], $_SESSION['tmp_lname'], $_SESSION['tmp_email'], $_SESSION['tmp_phone'], $_SESSION['tmp_address']);
-            $_SESSION['active_form'] = 'signup-success';
-            header('Location: '.$_SERVER['PHP_SELF'].'?form=signup-success');
-            exit;
-        } else {
-            $_SESSION['flash_signup_error'] = 'Signup failed. Please try again.';
-            $_SESSION['active_form'] = 'signup';
-            header('Location: '.$_SERVER['PHP_SELF']);
-            exit;
-        }
+    // Password match check
+    if ($password !== $confirm) {
+        $_SESSION['flash_signup_error'] = 'Passwords do not match';
+        $_SESSION['active_form'] = 'signup';
+        header('Location: '.$_SERVER['PHP_SELF']);
+        exit;
     }
+
+    $se = mysqli_real_escape_string($con, $email);
+    $sp = mysqli_real_escape_string($con, $phone);
+
+    // Check if email OR phone already exists
+    $check = mysqli_query($con, "SELECT user_id, email, phone FROM user WHERE email = '$se' OR phone = '$sp' LIMIT 1");
+    if ($check && mysqli_num_rows($check) > 0) {
+        $existing = mysqli_fetch_assoc($check);
+        if ($existing['email'] === $email) {
+            $_SESSION['flash_signup_error'] = 'Email already registered';
+        } elseif ($existing['phone'] === $phone) {
+            $_SESSION['flash_signup_error'] = 'Phone number already registered';
+        } else {
+            $_SESSION['flash_signup_error'] = 'Email or phone already registered';
+        }
+        $_SESSION['active_form'] = 'signup';
+        header('Location: '.$_SERVER['PHP_SELF']);
+        exit;
+    }
+
+    // Prepare other fields
+    $full_name = trim($fname.' '.$lname);
+    $sn = mysqli_real_escape_string($con, $full_name);
+    $sa = mysqli_real_escape_string($con, $address);
+    $spw = md5(mysqli_real_escape_string($con, $confirm)); // MD5 hash
+
+    $insert = "INSERT INTO user (name, email, password, role, phone, address, pin, city, stat, created_at)
+               VALUES ('$sn', '$se', '$spw', 'user', '$sp', '$sa','$pin','$city','$state', NOW())";
+
+    if (mysqli_query($con, $insert)) {
+        // Clear temp values now that signup succeeded
+        unset($_SESSION['tmp_fname'], $_SESSION['tmp_lname'], $_SESSION['tmp_email'], $_SESSION['tmp_phone'], $_SESSION['tmp_address']);
+        $_SESSION['active_form'] = 'signup-success';
+        header('Location: '.$_SERVER['PHP_SELF'].'?form=signup-success');
+        exit;
+    } else {
+        $_SESSION['flash_signup_error'] = 'Signup failed. Please try again.';
+        $_SESSION['active_form'] = 'signup';
+        header('Location: '.$_SERVER['PHP_SELF']);
+        exit;
+    }
+}
+
 
     // FORGOT PASSWORD – STEP 1: Verify identity ---------------------------
     if (isset($_POST['forgot-step1-submit'])) {
@@ -229,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $se = mysqli_real_escape_string($con, $email);
-        $spw = mysqli_real_escape_string($con, $confirm); // plaintext for compatibility
+        $spw = md5(mysqli_real_escape_string($con, $confirm)); // plaintext for compatibility
         $update = "UPDATE user SET password = '$spw' WHERE email = '$se' LIMIT 1";
 
         if (mysqli_query($con, $update)) {
@@ -285,7 +285,7 @@ $forgot_error = $_SESSION['flash_forgot_error'] ?? $forgot_error;
                         elseif ($active_form === 'signup') echo 'Create Account';
                         elseif ($active_form === 'forgot') echo 'Reset Password';
                         elseif ($active_form === 'signup-success') echo 'Account Created!';
-                        else echo 'FashionHub';
+                        else echo 'Timelines';
                         ?>
                     </h2>
                     <p id="form-subtitle">
@@ -313,7 +313,8 @@ $forgot_error = $_SESSION['flash_forgot_error'] ?? $forgot_error;
 
                 <!-- LOGIN FORM -->
                 <form id="login-form" class="auth-body" method="POST" style="display: <?php echo ($active_form==='login')?'block':'none'; ?>">
-                    <div class="form-group">
+                    
+                <div class="form-group">
                         <label for="login-email" class="form-label">Email Address</label>
                         <div class="input-wrapper">
                             <i class="fas fa-envelope icon-inside"></i>
@@ -486,7 +487,7 @@ $forgot_error = $_SESSION['flash_forgot_error'] ?? $forgot_error;
                     <div class="success-message">
                         <div class="success-icon" style="color:var(--ok)"><i class="fas fa-check-circle"></i></div>
                         <h4>Account Created Successfully!</h4>
-                        <p>Your FashionHub account has been created. Welcome to our community!</p>
+                        <p>Your Timelines account has been created. Welcome to our community!</p>
                         <div class="countdown">Redirecting to login in <span id="signup-countdown">5</span> seconds...</div>
                     </div>
                     <div class="auth-footer">

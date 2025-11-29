@@ -63,6 +63,31 @@ if (isset($_POST['update'])) {
                                 WHERE category = '$old_category_name'";
             mysqli_query($con, $update_products);
 
+            
+            // After successfully renaming folder
+            $oldDir = "../img/" . $old_category_name;
+            $newDir = "../img/" . $name;
+            
+            if (is_dir($oldDir)) {
+                rename($oldDir, $newDir);
+            }
+            
+            // Update all product image paths (4 columns)
+            $oldPath = "img/" . $old_category_name . "/";
+            $newPath = "img/" . $name . "/";
+            
+            $update_img_paths = "
+                UPDATE products 
+                SET 
+                    img1 = REPLACE(img1, '$oldPath', '$newPath'),
+                    img2 = REPLACE(img2, '$oldPath', '$newPath'),
+                    img3 = REPLACE(img3, '$oldPath', '$newPath'),
+                    img4 = REPLACE(img4, '$oldPath', '$newPath')
+                WHERE 
+                    category = '$name'
+            ";
+            mysqli_query($con, $update_img_paths);
+
             header("Location: categories.php?msg=Category Updated");
             exit();
         } else {
@@ -72,26 +97,7 @@ if (isset($_POST['update'])) {
 }
 
 
-// if (isset($_POST['update'])) {
-//     $img  =  $_POST['img-path'];
-//     $name =$_POST['category-name'];
 
-//     // Duplicate name check (excluding current category)
-//     $check = "SELECT * FROM categories WHERE categories_name = '$name' AND id != $id";
-//     $check_result = mysqli_query($con, $check);
-
-//     if (mysqli_num_rows($check_result) > 0) {
-//         $error = "Category name already exists!";
-//     } else {
-//         $update_sql = "UPDATE categories SET img = 'img/$img', categories_name = '$name' WHERE id = $id";
-//         if (mysqli_query($con, $update_sql)) {
-//             header("Location: categories.php?msg=Category Updated");
-//             exit();
-//         } else {
-//             $error = "Error: " . mysqli_error($con);
-//         }
-//     }
-// }
 ?>
 
 <?php include("include/header.php"); ?>
@@ -109,10 +115,7 @@ if (isset($_POST['update'])) {
                 <span class="file-name"><?= $category['img'] ?></span>
             </label>
 
-    <!-- <div class="form-group">
-        <label for="img-path">Image Path</label>
-        <input type="text" id="img-path" name="img-path" value="<?= $category['img'] ?>" required>
-    </div> -->
+    
 
     <div class="form-group">
         <label for="category-name">Category Name</label>

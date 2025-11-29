@@ -10,30 +10,13 @@ $action = $_GET['action'];
 $id = intval($_GET['id']); // always sanitize IDs
 
 switch ($action) {
-
-    // Change Role: Admin <-> Customer
-    case 'change_role':
-        // Get current role
-        $sql = "SELECT role FROM user WHERE user_id = $id LIMIT 1";
-        $result = mysqli_query($con, $sql);
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $newRole = ($row['role'] == 'admin') ? 'user' : 'admin';
-            $update = "UPDATE user SET role='$newRole' WHERE user_id=$id";
-            mysqli_query($con, $update);
-            header("Location: ../admin_table.php");
-        } else {
-            echo "User not found.";
-        }
-        unset($_GET);
-        break;
         // edit
     case 'edit':
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = mysqli_real_escape_string($con, $_POST['name']);
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $phone = mysqli_real_escape_string($con, $_POST['phone']);
-        $password = mysqli_real_escape_string($con, $_POST['password']);
+        $password = md5(mysqli_real_escape_string($con, $_POST['password']));
       
         $update = "UPDATE user SET 
                     name='$name', 

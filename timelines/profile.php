@@ -14,6 +14,12 @@
 </head>
 <body>
     <?php include('php/header.php') ?>
+    <?php
+       if (!isset($_SESSION['user_id'])) {
+                    header("location:login.php");
+                 }
+                 ?>
+
     <!-- Header -->
     <header class="profile-header text-center text-white pt-5 pb-4 position-relative">
         <div class="wave-divider">
@@ -31,109 +37,107 @@
 
 
 
-                <?php  
-                 
-                include_once('php/connection.php');
-                 
-                   // Check session and DB
-                 if (!isset($_SESSION['user_id'])) {
-                     die("User not logged in.");
-                 }
-                 if (!$con) {
-                     die("Database connection failed.");
-                 }
-                   
-                 $user_id =  $_SESSION['user_id'];
-                 $user = "SELECT * FROM user WHERE user_id = $user_id";
-                 $result = mysqli_query($con, $user);
-                                    
-               
-                 $row = mysqli_fetch_assoc($result); // Only one user, so no need for while
-                 $full_name = $row['name']; 
-                 $name_parts = explode(" ", $full_name);
-                 $first_letter = strtoupper($name_parts[0][0]);
-                 $last_letter = isset($name_parts[1]) ? strtoupper($name_parts[1][0]) : '';
-                 ?>
-
-    <!-- Main Content --><!-- Main Content -->
-<div class="container py-4">
-    <div class="row">
-        <!-- Left Column: Profile Information -->
-        <div class="col-lg-4 mb-4" >
-            <div class="profile-card p-4">
-                <div id="a1"> </div>
-                
-                <!-- 🟢 Initials -->
-                <div class="profile-avatar">
-                    <?php echo $first_letter . $last_letter; ?>
-                </div>
-
-                <!-- 🟢 Name -->
-                <div class="profile-info text-center">
-                    <h2 class="mb-3"><?php echo $full_name; ?></h2>
-                    <span class="badge-custom mb-4">Gold Member</span>
-                </div>
-
-                <!-- 🟢 Account Info -->
-                <div class="mt-4">
-                    <h4 class="section-title">Account Details</h4>
-
-                    <div class="info-item">
-                        <i class="fas fa-user"></i>
-                        <div>
-                            <p class="mb-0 fw-bold"><?php echo $row['name']; ?></p>
-                            <small class="text-mute">Full Name</small>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <p class="mb-0 fw-bold"><?php echo $row['email']; ?></p>
-                            <small class="text-mute">Email</small>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <p class="mb-0 fw-bold"><?php echo $row['phone']; ?></p>
-                            <small class="text-mute">Mobile</small>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <p class="mb-0 fw-bold"><?php echo $row['address']; ?></p>
-                            <small class="text-mute">Shipping Address</small>
-                        </div>
-                    </div>
-                          
-                    <div class="mt-4">
-                        <h4 class="section-title">Account Stats</h4>
-                        <div class="row">
-                            <div class="col-12 mb-3">
-                                <div class="stats-card">
-                                    <i class="fas fa-shopping-bag"></i>
-                                    <?php 
-                                     $order_query_count = "SELECT COUNT(*) AS total_orders FROM orders WHERE user_id = $user_id";
-                                     $result_count = mysqli_query($con, $order_query_count);
-                                     
-                                     // Fetch result
-                                     $row = mysqli_fetch_assoc($result_count);
-                                     $order_count = $row['total_orders'];                                    ?>
-                                    <div class="number"><?php echo $order_count; ?></div>
-                                    <div class="label">Orders</div>
-                                </div>
-                            </div>
+        <?php  
+         
+        include_once('php/connection.php');
+         
+           // Check session and DB
+         
+         if (!$con) {
+             die("Database connection failed.");
+         }
+           
+         $user_id =  $_SESSION['user_id'];
+         $user = "SELECT * FROM user WHERE user_id = $user_id";
+         $result = mysqli_query($con, $user);
                             
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
+         $row = mysqli_fetch_assoc($result); // Only one user, so no need for while
+         $full_name = $row['name']; 
+         $name_parts = explode(" ", $full_name);
+         $first_letter = strtoupper($name_parts[0][0]);
+         $last_letter = isset($name_parts[1]) ? strtoupper($name_parts[1][0]) : '';
+         ?>
 
+         <!-- Main Content --><!-- Main Content -->
+     <div class="container py-4">
+         <div class="row">
+             <!-- Left Column: Profile Information -->
+             <div class="col-lg-4 mb-4" >
+                 <div class="profile-card p-4">
+                     <div id="a1"> </div>
+                     
+                     <!-- 🟢 Initials -->
+                     <div class="profile-avatar">
+                         <?php echo $first_letter . $last_letter; ?>
+                     </div>
+     
+                     <!-- 🟢 Name -->
+                     <div class="profile-info text-center">
+                         <h2 class="mb-3"><?php echo $full_name; ?></h2>
+                         <span class="badge-custom mb-4">Gold Member</span>
+                     </div>
+     
+                     <!-- 🟢 Account Info -->
+                     <div class="mt-4">
+                         <h4 class="section-title">Account Details</h4>
+     
+                         <div class="info-item">
+                             <i class="fas fa-user"></i>
+                             <div>
+                                 <p class="mb-0 fw-bold"><?php echo $row['name']; ?></p>
+                                 <small class="text-mute">Full Name</small>
+                             </div>
+                         </div>
+     
+                         <div class="info-item">
+                             <i class="fas fa-envelope"></i>
+                             <div>
+                                 <p class="mb-0 fw-bold"><?php echo $row['email']; ?></p>
+                                 <small class="text-mute">Email</small>
+                             </div>
+                         </div>
+     
+                         <div class="info-item">
+                             <i class="fas fa-phone"></i>
+                             <div>
+                                 <p class="mb-0 fw-bold"><?php echo $row['phone']; ?></p>
+                                 <small class="text-mute">Mobile</small>
+                             </div>
+                         </div>
+     
+                         <div class="info-item">
+                             <i class="fas fa-map-marker-alt"></i>
+                             <div>
+                                 <p class="mb-0 fw-bold"><?php echo $row['address']; ?></p>
+                                 <small class="text-mute">Shipping Address</small>
+                             </div>
+                         </div>
+                               
+                         <div class="mt-4">
+                             <h4 class="section-title">Account Stats</h4>
+                             <div class="row">
+                                 <div class="col-12 mb-3">
+                                     <div class="stats-card">
+                                         <i class="fas fa-shopping-bag"></i>
+                                         <?php 
+                                          $order_query_count = "SELECT COUNT(*) AS total_orders FROM orders WHERE user_id = $user_id";
+                                          $result_count = mysqli_query($con, $order_query_count);
+                                          
+                                          // Fetch result
+                                          $row = mysqli_fetch_assoc($result_count);
+                                          $order_count = $row['total_orders'];  ?>
+                                         <div class="number"><?php echo $order_count; ?></div>
+                                         <div class="label">Orders</div>
+                                     </div>
+                                 </div>
+                                 
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+     
 
               
             

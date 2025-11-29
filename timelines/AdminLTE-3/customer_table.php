@@ -28,7 +28,7 @@ $result = mysqli_query($con, $sql);
 ?>
 
 <div id="customer_table">
-    <h2>User Management (Only Users)</h2>
+    <h2>Customer Management</h2>
     <table>
         <thead>
             <tr>
@@ -38,7 +38,6 @@ $result = mysqli_query($con, $sql);
                 <th>Password</th>
                 <th>Phone</th>
                 <th>Status</th>
-                <th>Role</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -72,16 +71,6 @@ $result = mysqli_query($con, $sql);
                         </a>
                     <?php } ?>
                         </td>
-                        
-                        <!-- Role Change Button -->
-                       <td class="allbutton">
-                           <a href="include/customer_process.php?action=change_role&id=<?php echo $row['user_id']; ?>">
-                               <button id="btnEdit">
-                                   <i class="fa-solid fa-user-shield"></i> Admin
-                               </button>
-                           </a>
-                       </td>
-
                         
                         <!-- Delete Button -->
                         <td class="allbutton">

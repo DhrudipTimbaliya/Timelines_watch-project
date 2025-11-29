@@ -54,44 +54,44 @@ $total = $subtotal + $shipping_cost + $tax - $discount;
                     </div>
                     
                     <!-- Cart Items -->
-                    <div id="cart-items">
-                        <?php if (!empty($_SESSION['cart'])): ?>
-                            <?php foreach ($_SESSION['cart'] as $item): ?>
-                                <div class="cart-item row" data-item-id="<?php echo $item['id']; ?>">
-                                    <div class="col-md-3">
-                                        <div class="item-image">
-                                            <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" width="150">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="d-flex flex-column h-100">
-                                            <div class="mb-2">
-                                                <h5 class="item-name"><?php echo $item['name']; ?></h5>
-                                                <div class="item-price" data-price="<?php echo $item['price']; ?>">₹<?php echo number_format($item['price'], 2); ?></div>
-                                            </div>
-                                            <div class="mt-auto d-flex align-items-center">
-                                                <div class="quantity-control me-3" data-item-id="<?php echo $item['id']; ?>">
-                                                    <button class="quantity-btn minus">-</button>
-                                                    <input type="text" class="quantity-input" value="<?php echo $item['quantity']; ?>" readonly>
-                                                    <button class="quantity-btn plus">+</button>
-                                                </div>
-                                                <form method="POST" action="php/remove_from_cart.php" style="display:inline;">
-                                                    <input type="hidden" name="remove_id" value="<?php echo $item['id']; ?>">
-                                                    <button type="submit" class="remove-btn">
-                                                        <i class="fas fa-trash me-1"></i> Remove
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+        <div id="cart-items">
+            <?php if (!empty($_SESSION['cart'])): ?>
+                <?php foreach ($_SESSION['cart'] as $item): ?>
+                    <div class="cart-item row" data-item-id="<?php echo $item['id']; ?>">
+                        <div class="col-md-3">
+                            <div class="item-image">
+                                <img src="<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" width="150">
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="d-flex flex-column h-100">
+                                <div class="mb-2">
+                                    <h5 class="item-name"><?php echo $item['name']; ?></h5>
+                                    <div class="item-price" data-price="<?php echo $item['price']; ?>">₹<?php echo number_format($item['price'], 2); ?></div>
                                 </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p>Your cart is empty</p>
-                        <?php endif; ?>
+                                <div class="mt-auto d-flex align-items-center">
+                                    <div class="quantity-control me-3" data-item-id="<?php echo $item['id']; ?>">
+                                        <button class="quantity-btn minus">-</button>
+                                        <input type="text" class="quantity-input" value="<?php echo $item['quantity']; ?>" readonly>
+                                        <button class="quantity-btn plus">+</button>
+                                    </div>
+                                    <form method="POST" action="php/remove_from_cart.php" style="display:inline;">
+                                        <input type="hidden" name="remove_id" value="<?php echo $item['id']; ?>">
+                                        <button type="submit" class="remove-btn">
+                                            <i class="fas fa-trash me-1"></i> Remove
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Your cart is empty</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 
             <div class="col-lg-4">
                 <div class="cart-container">

@@ -95,20 +95,20 @@ if (!empty($_GET['price']) && is_array($_GET['price'])) {
     $price_conditions = [];
     foreach ($_GET['price'] as $range) {
         switch ($range) {
-            case "under100":
-                $price_conditions[] = "p.price < 100";
+            case "under1000":
+                $price_conditions[] = "p.price < 1000";
                 break;
-            case "100-500":
-                $price_conditions[] = "p.price BETWEEN 100 AND 500";
+            case "1000-3000":
+                $price_conditions[] = "p.price BETWEEN 1000 AND 3000";
                 break;
-            case "500-1000":
-                $price_conditions[] = "p.price BETWEEN 500 AND 1000";
+            case "3000-5000":
+                $price_conditions[] = "p.price BETWEEN 3000 AND 5000";
                 break;
-            case "1000-5000":
-                $price_conditions[] = "p.price BETWEEN 1000 AND 5000";
+            case "5000-8000":
+                $price_conditions[] = "p.price BETWEEN 5000 AND 8000";
                 break;
-            case "over5000":
-                $price_conditions[] = "p.price > 5000";
+            case "over8000":
+                $price_conditions[] = "p.price > 8000";
                 break;
         }
     }
@@ -285,11 +285,11 @@ if (!empty($search)) {
                                 <h5>Price Range</h5>
                                 <?php
                                 $price_ranges = [
-                                    ['value' => 'under100', 'label' => 'Under ₹100'],
-                                    ['value' => '100-500', 'label' => '₹100 - ₹500'],
-                                    ['value' => '500-1000', 'label' => '₹500 - ₹1000'],
-                                    ['value' => '1000-5000', 'label' => '₹1000 - ₹5000'],
-                                    ['value' => 'over5000', 'label' => 'Over ₹5000']
+                                    ['value' => 'under1000', 'label' => 'Under ₹1000'],
+                                    ['value' => '1000-3000', 'label' => '₹1000 - ₹3000'],
+                                    ['value' => '3000-5000', 'label' => '₹3000 - ₹5000'],
+                                    ['value' => '5000-8000', 'label' => '₹5000 - ₹8000'],
+                                    ['value' => 'over8000', 'label' => 'Over ₹8000']
                                 ];
                                 foreach($price_ranges as $range):
                                 ?>
@@ -344,57 +344,57 @@ if (!empty($search)) {
                     </div>
                 </div>
 
-                <section class="products-section">
-                    <div class="container">
-                        
-                        <div class="row g-4">
-                            <?php if(mysqli_num_rows($result) > 0): ?>
-                                <?php while($row = mysqli_fetch_assoc($result)): ?>
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="product-card">
-                                            <div class="product-img">
-                                                <img src="<?php echo htmlspecialchars($row['img1']); ?>" 
-                                                     alt="<?php echo htmlspecialchars($row['name']); ?>">
-                                                <div class="product-overlay">
-                                                    <div class="icon-btn">
-                                                      <form action="php/cart_process.php" method="post" style="display:inline;">
-                                                       <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                       <input type="hidden" name="quantity" value="1">
-                                                       <button type="submit" name="add_to_cart" class="btn btn-link text-white p-0 m-0">
-                                                           <i class="fas fa-shopping-cart"></i>
-                                                       </button>
-                                                   </form>
-                                                    </div>
-                                                    <div class="icon-btn">
-                                                        <a href="single_product.php?id=<?php echo $row['id']; ?>" 
-                                                           class="text-white">
-                                                            <i class="fas fa-info"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="product-info">
-                                                <h4><?php echo htmlspecialchars($row['name']); ?></h4>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <span class="product-price">
-                                                        ₹<?php echo number_format($row['price'], 2); ?>
-                                                    </span>
-                                                    <span class="text-warning">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
+<section class="products-section">
+    <div class="container">
+        
+        <div class="row g-4">
+            <?php if(mysqli_num_rows($result) > 0): ?>
+                <?php while($row = mysqli_fetch_assoc($result)): ?>
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="<?php echo htmlspecialchars($row['img1']); ?>" 
+                                     alt="<?php echo htmlspecialchars($row['name']); ?>">
+                                <div class="product-overlay">
+                                    <div class="icon-btn">
+                                      <form action="php/cart_process.php" method="post" style="display:inline;">
+                                       <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                       <input type="hidden" name="quantity" value="1">
+                                       <button type="submit" name="add_to_cart" class="btn btn-link text-white p-0 m-0">
+                                           <i class="fas fa-shopping-cart"></i>
+                                       </button>
+                                   </form>
                                     </div>
-                                <?php endwhile; ?>
-                            <?php else: ?>
-                                <p class="text-center">No products available</p>
-                            <?php endif; ?>
+                                    <div class="icon-btn">
+                                        <a href="single_product.php?id=<?php echo $row['id']; ?>" 
+                                           class="text-white">
+                                            <i class="fas fa-info"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h4><?php echo htmlspecialchars($row['name']); ?></h4>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="product-price">
+                                        ₹<?php echo number_format($row['price'], 2); ?>
+                                    </span>
+                                    <span class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-center">No products available</p>
+            <?php endif; ?>
+        </div>
 
                         <!-- Pagination -->
                         <div class="pagination-section mt-4">

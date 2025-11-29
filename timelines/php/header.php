@@ -8,12 +8,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-       
-
-      
-
-        </style>
+    
 </head> 
 <body>
     
@@ -28,7 +23,7 @@ session_start();
         <div class="container">
             <a class="navbar-brand" href="#">
                 <!-- <span class="logo"> -->
-                    <img src="img/timelines.png" alt="" class="logo_img">
+                    <img src="img/timelines_logo.png" alt="" class="logo_img">
                 <!-- </span> -->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">

@@ -16,8 +16,8 @@ if (isset($_GET['category'])) {
     <link rel="stylesheet" href="css1/index.css">
 </head>
 <body>
- <?php include('php/header.php') ?>
- <?include('php/connection.php');?>
+ <?php include('php/header.php'); ?>
+ <? include('php/connection.php'); ?>
  
  <!-- Hero Section -->
 <section class="category-hero-section d-flex align-items-center text-center text-white">

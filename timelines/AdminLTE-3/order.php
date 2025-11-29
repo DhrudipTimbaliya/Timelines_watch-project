@@ -1,6 +1,6 @@
 <?php include_once("include/header.php"); ?>
     <!-- Main content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" id="oder_bg">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">

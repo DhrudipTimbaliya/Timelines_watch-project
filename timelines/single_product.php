@@ -59,8 +59,6 @@ $related_brand=$product['brand_name'];
         <div class="col-lg-10">
             <div class="product-card p-4">
                 <div class="row">
-
-                    <!-- Product Image Carousel -->
                     <div class="col-md-6 mb-4 mb-md-0">
                         <?php if(!empty($product['img1']) && !empty($product['img2']) && !empty($product['img3']) && !empty($product['img4'])): ?>
                         <div class="feature-badge pulse"></div>
@@ -554,6 +552,7 @@ $result = mysqli_query($con, $sql);
             }
 
             // Initial check
+            
             animateCards();
 
             // Check on scroll
